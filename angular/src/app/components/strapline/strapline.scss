@@ -7,3 +7,18 @@
   transition: none; // No transition on class removal -> instant hiding
   opacity: 0;
 }
+
+.strap-line:after{
+  content: "";
+  animation: strap-lines 7s linear infinite;
+}
+
+@keyframes strap-lines {
+  0% { content: "Our average time from pickup to drop-off"}
+  16% { content: "Quicker than your commute"}
+  32% { content: "So fast it'll blow your socks off"}
+  48% { content: "Slow and steady wins the race - not someone from Repairly"}
+  64% { content: "Recently compared to the Hadron Collider"}
+  82% { content: "Repairly representative spotted in Bugatti Veyron, Feb 2016"}
+  100% { content: "Usain Bolt, team leader at Repairly"}
+}
