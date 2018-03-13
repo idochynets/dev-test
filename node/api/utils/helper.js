@@ -30,7 +30,7 @@ class Helper {
   }
   static saveUpdates(updates) {
     return function(entity) {
-      var updated = _.merge(entity, updates);
+      let updated = _.merge(entity, updates);
       return updated.save()
         .then(updated => {
           return updated;

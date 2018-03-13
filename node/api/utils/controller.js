@@ -1,6 +1,7 @@
-var _  = require('lodash');
-var co = require('co');
-var Helper = require('./helper');
+let _  = require('lodash');
+let co = require('co');
+let mongoose = require('mongoose');
+let Helper = require('./helper');
 
 class Controller {
   constructor(Model) {
@@ -8,7 +9,7 @@ class Controller {
   };
   create(req,res) {
     co(function* () {
-      let empty_model = new this.Model();
+      let empty_model = new this.Model({_id: new mongoose.Types.ObjectId()});
       for (let prop in req.body){
         if(req.body[prop] instanceof Array){
           empty_model[prop] = req.body[prop].map(entity=>{return entity})
@@ -16,24 +17,21 @@ class Controller {
         }
       }
       let filled_model = _.extend(empty_model,req.body);
-      let response = yield filled_model.save();
-      return response;
+      return yield filled_model.save();
     }.bind(this))
     .then(Helper.respondWithResult(res,201))
     .catch(Helper.handleError(res));
   };
   show(req,res) {
     co(function* () {
-      let object = yield this.Model.findById(req.params.id).exec();
-      return object;
+      return yield this.Model.findById(req.params.id).exec();
     }.bind(this))
     .then(Helper.respondWithResult(res))
     .catch(Helper.handleError(res));
   };
   get(req,res) {
     co(function* () {
-      let objects = yield this.Model.find().exec();
-      return objects;
+      return yield this.Model.find().exec();
     }.bind(this))
     .then(Helper.respondWithResult(res))
     .catch(Helper.handleError(res));
@@ -52,8 +50,7 @@ class Controller {
       }
       let updated = _.extend(object,req.body);
       for (let prop in props) updated.markModified(prop);
-      let response = yield updated.save()
-      return response;
+      return yield updated.save();
     }.bind(this))
     .then(Helper.respondWithResult(res))
     .catch(Helper.handleError(res));
@@ -69,4 +66,4 @@ class Controller {
   };
 }
 
-module.exports = Controller
+module.exports = Controller;

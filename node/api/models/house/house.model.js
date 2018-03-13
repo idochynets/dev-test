@@ -1,11 +1,14 @@
 'use strict';
 
 let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 mongoose.Promise = Promise;
 
-var HouseSchema = new mongoose.Schema({
-  type: String,
-  colour: String
+let HouseSchema = new mongoose.Schema({
+    _id: Schema.Types.ObjectId,
+    type: String,
+    colour: String,
+    owner:{type: Schema.Types.ObjectId, ref: "Person"}
 }, {
   usePushEach: true
 });
